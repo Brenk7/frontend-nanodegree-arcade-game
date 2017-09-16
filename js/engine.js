@@ -25,8 +25,8 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = 909;
+    canvas.height = 909;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -95,6 +95,22 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+
+        //Reveal the key and star
+        if (collectedGems.length === 3) {
+            rockStar.x = 1000;
+            rockStar.y = 1000;
+        }
+
+        if (collectedStar.length > 0) {
+            rockSelector.x = 1000;
+            rockSelector.y = 1000;
+        }
+
+        if (selectorCoordinate.length > 0) {
+            rockKey.x = 1000;
+            rockKey.y = 1000;
+        }
     }
 
     /* This function initially draws the "game level", it will then call
@@ -108,15 +124,18 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/water-block.png', // Top row is water
+                'images/stone-block.png', // Row 1 of 3 of stone
+                'images/stone-block.png', // Row 2 of 3 of stone
+                'images/stone-block.png', // Row 3 of 3 of stone
+                'images/stone-block.png', // Row 3 of 3 of stone
+                'images/stone-block.png', // Row 3 of 3 of stone
+                'images/stone-block.png', // Row 3 of 3 of stone
+                'images/grass-block.png', // Row 1 of 2 of grass
+                'images/grass-block.png' // Row 2 of 2 of grass
             ],
-            numRows = 6,
-            numCols = 5,
+            numRows = 9,
+            numCols = 9,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
@@ -151,7 +170,19 @@ var Engine = (function(global) {
             enemy.render();
         });
 
+        allRocks.forEach(function(rock) {
+            rock.render();
+        });
+
+        allGems.forEach(function(gem) {
+            gem.render();
+        });
+
         player.render();
+        key.render();
+        heart.render();
+        selector.render();
+        star.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -171,7 +202,13 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/Rock.png',
+        'images/Key.png',
+        'images/Heart.png',
+        'images/Star.png',
+        'images/Selector.png',
+        'images/Gem%20Orange.png',
     ]);
     Resources.onReady(init);
 
